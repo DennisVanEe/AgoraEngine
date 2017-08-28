@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3E16736A-091B-4379-A6DF-0434B58FD70D}</ProjectGuid>
-    <RootNamespace>AgoraEngine</RootNamespace>
+    <ProjectGuid>{9C5156C7-A06B-402C-8382-2427A4427DE3}</ProjectGuid>
+    <RootNamespace>AgoraMath</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,18 +69,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -122,14 +111,54 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
+    <ClInclude Include="src\Include\Math\Float2.hpp" />
+    <ClInclude Include="src\Include\Math\Float2Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Float3.hpp" />
+    <ClInclude Include="src\Include\Math\Float3Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Float4.hpp" />
+    <ClInclude Include="src\Include\Math\Float4Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Float4x4.hpp" />
+    <ClInclude Include="src\Include\Math\Float4x4Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Float4x4Trans.hpp" />
+    <ClInclude Include="src\Include\Math\FloatConv.hpp" />
+    <ClInclude Include="src\Include\Math\FloatVec4x4Conv.hpp" />
+    <ClInclude Include="src\Include\Math\FloatVecnConv.hpp" />
+    <ClInclude Include="src\Include\Math\MathShared.hpp" />
+    <ClInclude Include="src\Include\Math\StringConv.hpp" />
+    <ClInclude Include="src\Include\Math\Vec3.hpp" />
+    <ClInclude Include="src\Include\Math\Vec3Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Vec4.hpp" />
+    <ClInclude Include="src\Include\Math\Vec4Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Vec4x4.hpp" />
+    <ClInclude Include="src\Include\Math\Vec4x4Ops.hpp" />
+    <ClInclude Include="src\Include\Math\Vec4x4Trans.hpp" />
+    <ClInclude Include="src\Include\Math\VecConv.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Include\Types.hpp" />
-    <ClInclude Include="src\Include\Utility.hpp" />
-    <ClInclude Include="src\Mesh.hpp" />
-    <ClInclude Include="src\Model.hpp" />
-    <ClInclude Include="src\Vertex.hpp" />
+    <None Include="src\Include\Math\Float2.inl" />
+    <None Include="src\Include\Math\Float2Ops.inl" />
+    <None Include="src\Include\Math\Float3.inl" />
+    <None Include="src\Include\Math\Float3Ops.inl" />
+    <None Include="src\Include\Math\Float4.inl" />
+    <None Include="src\Include\Math\Float4Ops.inl" />
+    <None Include="src\Include\Math\Float4x4.inl" />
+    <None Include="src\Include\Math\Float4x4Ops.inl" />
+    <None Include="src\Include\Math\Float4x4Trans.inl" />
+    <None Include="src\Include\Math\FloatConv.inl" />
+    <None Include="src\Include\Math\FloatVec4x4Conv.inl" />
+    <None Include="src\Include\Math\FloatVecnConv.inl" />
+    <None Include="src\Include\Math\StringConv.inl" />
+    <None Include="src\Include\Math\Vec3.inl" />
+    <None Include="src\Include\Math\Vec3Ops.inl" />
+    <None Include="src\Include\Math\Vec4.inl" />
+    <None Include="src\Include\Math\Vec4Ops.inl" />
+    <None Include="src\Include\Math\Vec4x4.inl" />
+    <None Include="src\Include\Math\Vec4x4Ops.inl" />
+    <None Include="src\Include\Math\Vec4x4Trans.inl" />
+    <None Include="src\Include\Math\VecConv.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Test\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

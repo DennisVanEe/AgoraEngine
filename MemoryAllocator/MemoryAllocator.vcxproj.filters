@@ -15,25 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClInclude Include="src\Include\MemAlloc\Allocator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\MemAlloc\DefaultAllocator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\MemAlloc\PoolAllocator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\MemAlloc\StackAllocator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Test\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Mesh.hpp">
+    <None Include="src\Include\MemAlloc\StackAllocator.inl">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model.hpp">
+    </None>
+    <None Include="src\Include\MemAlloc\PoolAllocator.inl">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vertex.hpp">
+    </None>
+    <None Include="src\Include\MemAlloc\DefaultAllocator.inl">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Include\Types.hpp">
+    </None>
+    <None Include="src\Include\MemAlloc\Allocator.inl">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Include\Utility.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    </None>
   </ItemGroup>
 </Project>

@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3E16736A-091B-4379-A6DF-0434B58FD70D}</ProjectGuid>
-    <RootNamespace>AgoraEngine</RootNamespace>
+    <ProjectGuid>{044A9D6D-AF05-4EA3-8FD7-8811B3FB010D}</ProjectGuid>
+    <RootNamespace>MemoryAllocator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,14 +122,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
+    <ClInclude Include="src\Include\MemAlloc\Allocator.hpp" />
+    <ClInclude Include="src\Include\MemAlloc\DefaultAllocator.hpp" />
+    <ClInclude Include="src\Include\MemAlloc\PoolAllocator.hpp" />
+    <ClInclude Include="src\Include\MemAlloc\StackAllocator.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Include\Types.hpp" />
-    <ClInclude Include="src\Include\Utility.hpp" />
-    <ClInclude Include="src\Mesh.hpp" />
-    <ClInclude Include="src\Model.hpp" />
-    <ClInclude Include="src\Vertex.hpp" />
+    <ClCompile Include="src\Test\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Include\MemAlloc\Allocator.inl" />
+    <None Include="src\Include\MemAlloc\DefaultAllocator.inl" />
+    <None Include="src\Include\MemAlloc\PoolAllocator.inl" />
+    <None Include="src\Include\MemAlloc\StackAllocator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
