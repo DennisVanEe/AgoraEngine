@@ -26,31 +26,31 @@ namespace agora
 
     constexpr unsigned crc_table[] = { A(0) };
 
-    constexpr uint32_t crc32_impl(const char* p, size_t len, uint32_t crc)
+    constexpr std::uint32_t crc32_impl(const char* p, std::size_t len, std::uint32_t crc)
     {
         return len ?
             crc32_impl(p + 1, len - 1, (crc >> 8) ^ crc_table[(crc & 0xFF) ^ *p])
             : crc;
     }
 
-    constexpr uint32_t crc32(const char* data, size_t length)
+    constexpr std::uint32_t crc32(const char* data, std::size_t length)
     {
         return ~crc32_impl(data, length, ~0);
     }
 
-    constexpr size_t strlen_c(const char* str)
+    constexpr std::size_t strlen_c(const char* str)
     {
         return *str ? 1 + strlen_c(str + 1) : 0;
     }
 
-    constexpr uint32_t const_crc32(const char* str)
+    constexpr std::uint32_t const_crc32(const char* str)
     {
         return crc32(str, strlen_c(str));
     }
 
     // What was added later by the author(s) of the project:
-    using ag_HashInt = uint32_t;
-    constexpr ag_HashInt HASH(const char* str)
+    using HashInt = std::uint32_t;
+    constexpr HashInt HASH(const char* str)
     {
         return const_crc32(str);
     }

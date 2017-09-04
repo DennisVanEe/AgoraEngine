@@ -22,7 +22,7 @@ namespace agora
         void* allocate(std::size_t size, int flags = 0);
         void* allocate(std::size_t size, std::size_t alignment, int flags = 0);
 
-        void free(void* memory);
+        void free(void* memory, std::size_t size);
 
         const char* getID() const;
 

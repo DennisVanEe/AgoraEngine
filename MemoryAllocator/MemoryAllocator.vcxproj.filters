@@ -27,6 +27,9 @@
     <ClInclude Include="src\Include\MemAlloc\StackAllocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Include\MemAlloc\Allocates.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Test\main.cpp">

@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Include\MemAlloc\Allocates.hpp" />
     <ClInclude Include="src\Include\MemAlloc\Allocator.hpp" />
     <ClInclude Include="src\Include\MemAlloc\DefaultAllocator.hpp" />
     <ClInclude Include="src\Include\MemAlloc\PoolAllocator.hpp" />

@@ -33,7 +33,7 @@ void* agora::DefaultAllocator<COUNT_ALLOC>::allocate(std::size_t size, std::size
 }
 
 template<bool COUNT_ALLOC>
-void agora::DefaultAllocator<COUNT_ALLOC>::free(void* memory)
+void agora::DefaultAllocator<COUNT_ALLOC>::free(void* memory, std::size_t size)
 {
     std::free(memory);
     MemCheckAlloc<COUNT_ALLOC>::decCnt();
