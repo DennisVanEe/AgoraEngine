@@ -131,6 +131,9 @@
     <ClInclude Include="src\Model.hpp" />
     <ClInclude Include="src\Vertex.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Mesh.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

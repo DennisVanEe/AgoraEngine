@@ -258,8 +258,8 @@ void agora::FixedHashMap<T, Allocator, FastBaseTwo>::cleanMap(std::uint32_t inde
     }
 }
 
-template<class T, class Alloc, bool FastBaseTwo>
-std::uint32_t agora::FixedHashMap<T, Alloc, FastBaseTwo>::findIndex(HashInt hash) const
+template<class T, class Allocator, bool FastBaseTwo>
+std::uint32_t agora::FixedHashMap<T, Allocator, FastBaseTwo>::findIndex(HashInt hash) const
 {
     assert(m_buckets != nullptr);
 
