@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3E16736A-091B-4379-A6DF-0434B58FD70D}</ProjectGuid>
-    <RootNamespace>AgoraEngine</RootNamespace>
+    <ProjectGuid>{75E20FB7-565D-41C4-8B9C-DB21F53858F9}</ProjectGuid>
+    <RootNamespace>FileIO</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,25 +70,25 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(SolutionDir)FileIO\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(SolutionDir)FileIO\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(SolutionDir)FileIO\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)AgoraMath\src\Include;$(SolutionDir)MemoryAllocator\src\Include;$(SolutionDir)..\AgoraDependencies\GLAD\include;$(SolutionDir)FileIO\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -122,17 +122,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
+    <ClInclude Include="src\file_group.hpp" />
+    <ClInclude Include="src\ZIPArchive.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Include\Types.hpp" />
-    <ClInclude Include="src\Include\Utility.hpp" />
-    <ClInclude Include="src\Mesh.hpp" />
-    <ClInclude Include="src\Model.hpp" />
-    <ClInclude Include="src\Vertex.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Mesh.inl" />
+    <ClCompile Include="src\file_group.cpp" />
+    <ClCompile Include="src\ZIPArchive.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

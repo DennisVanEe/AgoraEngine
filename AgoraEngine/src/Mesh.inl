@@ -14,6 +14,10 @@ agora::Mesh::Mesh() :
 
 agora::Mesh::~Mesh()
 {
+#   ifdef AGORA_DEBUG
+        assert(!m_VBOReleased);
+#   endif
+
     assert(m_attributes == nullptr);
     assert(m_vertexBuffer == nullptr);
     assert(m_indexBuffer == nullptr);
@@ -41,39 +45,17 @@ inline unsigned agora::Mesh::getVertexBufferSize() const
     return m_vertexBufferSize;
 }
 
-template<class Allocator>
-inline bool agora::Mesh::prepare(Allocator& allocator, unsigned vertexBuffSize, unsigned numAttrib, unsigned stride, unsigned indexBuffSize)
+inline void agora::Mesh::prepare(void* const baseLocation, const unsigned vertexBuffSize, const unsigned numAttrib, const unsigned stride, const unsigned indexBuffSize)
 {
     m_numAttributes = numAttrib;
     m_vertexBufferSize = vertexBuffSize;
     m_vertexStride = stride;
     m_indexBufferSize = indexBuffSize;
     
-    unsigned attribBuffSize = numAttrib * sizeof(VertexAttrib);
-
-    std::uintptr_t mem = reinterpret_cast<std::uintptr_t>(allocator.allocate(attribBuffSize + vertexBuffSize + indexBuffSize, alignof(GLfloat), 0));
-    m_attributes = new(reinterpret_cast<void*>(mem)) VertexAttrib[m_numAttributes];
-    m_indexBuffer = reinterpret_cast<GLuint*>(mem + attribBuffSize);
-    m_vertexBuffer = reinterpret_cast<aByte*>(mem + attribBuffSize + m_indexBufferSize);
-    return mem != 0;
-}
-
-template<class Allocator>
-inline bool agora::Mesh::free(Allocator& allocator)
-{
-    assert(m_numAttributes != nullptr); // though it wouldn't cause any runtime errors, indicative of design error
-
-    bool result = allocator.free(m_attributes, numAttrib * sizeof(VertexAttrib) + vertexBuffSize + indexBuffSize);
-
-    m_attributes = nullptr;
-    m_indexBuffer = nullptr;
-    m_vertexBuffer = nullptr;
-
-    m_numAttributes = 0;
-    m_vertexBufferSize = 0;
-    m_indexBufferSize = 0;
-
-    return result;
+    const unsigned attribBuffSize = numAttrib * sizeof(VertexAttrib);
+    m_attributes = reinterpret_cast<VertexAttrib*>(baseLocation);
+    m_indexBuffer = reinterpret_cast<GLuint*>(m_attributes + attribBuffSize);
+    m_vertexBuffer = reinterpret_cast<aByte*>(m_indexBuffer + m_indexBufferSize);
 }
 
 inline GLuint* agora::Mesh::getIndexData(unsigned startLoc)
@@ -93,6 +75,10 @@ inline unsigned agora::Mesh::getIndexBufferSize() const
     return m_indexBufferSize;
 }
 
+inline unsigned agora::Mesh::getNumIndices() const
+{
+    return m_indexBufferSize / sizeof(GLuint);
+}
 
 inline void agora::Mesh::addAttrib(unsigned index, VertexAttrib attrib)
 {
@@ -114,9 +100,46 @@ inline const T* agora::Mesh::getVertexData(unsigned startLoc) const
     return getVertexData(startLoc);
 }
 
+template<typename T>
+inline T* agora::Mesh::releaseVertexData(unsigned startLoc)
+{
+#   ifdef AGORA_DEBUG
+        m_VBOReleased = true;
+#   endif
 
-template<GLenum Usage>
-void agora::Mesh::sendToGPU()
+    std::ptrdiff_t diff = reinterpret_cast<std::uintptr_t>(m_vertexBuffer) - reinterpret_cast<std::uintptr_t>(m_attributes);
+    return reinterpret_cast<T*>(glMapNamedBufferRange(m_VBO, diff + startLoc, m_vertexBufferSize - startLoc, GL_MAP_WRITE_BIT));
+}
+
+inline void agora::Mesh::returnVertexData()
+{
+#   ifdef AGORA_DEBUG
+        m_VBOReleased = false;
+#   endif
+
+    assert(glUnmapNamedBuffer(m_VBO));
+}
+
+inline GLuint* agora::Mesh::releaseIndexData(unsigned startLoc)
+{
+#   ifdef AGORA_DEBUG
+        m_EBOReleased = true;
+#   endif
+
+    std::ptrdiff_t diff = reinterpret_cast<std::uintptr_t>(m_vertexBuffer) - reinterpret_cast<std::uintptr_t>(m_attributes);
+    return reinterpret_cast<GLuint*>(glMapNamedBufferRange(m_EBO, startLoc, m_indexBufferSize, GL_MAP_WRITE_BIT));
+}
+
+inline void agora::Mesh::returnIndexData()
+{
+#   ifdef AGORA_DEBUG
+        m_EBOReleased = false;
+#   endif
+
+    assert(glUnmapNamedBuffer(m_EBO));
+}
+
+void agora::Mesh::sendToGPU(GLenum usage)
 {
     if (m_VAO == 0)
     {
@@ -125,11 +148,12 @@ void agora::Mesh::sendToGPU()
         glGenBuffers(1, &m_EBO);
 
         // load into GPU:
-        glNamedBufferData(m_VBO, m_vertexBufferSize, m_vertexBuffer, Usage);
-        glNamedBufferData(m_EBO, m_indexBufferSize, m_indexBuffer, Usage);
+        glNamedBufferData(m_VBO, m_vertexBufferSize, m_vertexBuffer, usage);
+        glNamedBufferData(m_EBO, m_indexBufferSize, m_indexBuffer, usage);
 
-        glVertexArrayVertexBuffer(m_VAO, 0, m_VBO, 0, m_vertexStride);
-        for (unsigned i = 0; i < NumAttrib; i++)
+        std::ptrdiff_t diff = reinterpret_cast<std::uintptr_t>(m_vertexBuffer) - reinterpret_cast<std::uintptr_t>(m_attributes);
+        glVertexArrayVertexBuffer(m_VAO, 0, m_VBO, diff, m_vertexStride);
+        for (unsigned i = 0; i < m_numAttributes; i++)
         {
             glEnableVertexAttribArray(i);
             glVertexArrayAttribFormat(m_VAO, i, m_attributes[i].m_size, m_attributes[i].m_type, m_attributes[i].m_normalized, m_attributes[i].m_offset);

@@ -5,8 +5,11 @@
 #include <cstdint>
 #include <MemAlloc/Allocates.hpp>
 #include <glad/glad.h>
+#include <Types.hpp>
 
 #include "Include/Types.hpp"
+
+#define AGORA_DEBUG
 
 namespace agora
 {
@@ -44,22 +47,21 @@ namespace agora
         // Get max amount of space that is accessible for use (0 if non was allocated or there was an error)
         inline unsigned getVertexBufferSize() const;
 
-        // the memory is managed by the central mesh manager (the buffer in RAM, that is)
-        // Size indicates a size in bytes
-        // num indicates the number of objects
-        template<class Allocator>
-        inline bool prepare(Allocator& allocator, unsigned vertexBuffSize, unsigned numAttrib, unsigned stride, unsigned indexBuffSize);
-        template<class Allocator>
-        inline bool free(Allocator& allocator);
+        template<typename T>
+        inline T* releaseVertexData(unsigned startLoc);
+        inline void returnVertexData();
+        inline GLuint* releaseIndexData(unsigned startLoc = 0);
+        inline void returnIndexData();
 
         inline GLuint* getIndexData(unsigned startLoc = 0);
         inline const GLuint* getIndexData(unsigned startLoc = 0) const;
         inline unsigned getIndexBufferSize() const;
 
+        inline unsigned getNumIndices() const;
+
         inline void addAttrib(unsigned index, VertexAttrib attrib);
 
-        template<GLenum USAGE = GL_STATIC_DRAW>
-        void sendToGPU();
+        void sendToGPU(GLenum usage = GL_STATIC_DRAW);
         void releaseFromGPU();
 
         bool isInGPU() const;
@@ -76,6 +78,13 @@ namespace agora
         void operator=(Mesh&&) = delete;
 
     private:
+        template<typename Allocator>
+        friend class Model;
+
+        // Memory is purely managed by the model itself
+        inline void prepare(void* baseLocation, unsigned vertexBuffSize, unsigned numAttrib, unsigned stride, unsigned indexBuffSize);
+
+    private:
         VertexAttrib*   m_attributes; // always comes first in the buffer (so, this is what is first pointed at)
         unsigned        m_numAttributes;
         aByte*          m_vertexBuffer;
@@ -88,7 +97,13 @@ namespace agora
         GLuint          m_VAO;
         GLuint          m_VBO;
         GLuint          m_EBO;
+
+#   ifdef AGORA_DEBUG
+        bool            m_VBOReleased;
+        bool            m_EBOReleased;
+#   endif
     };
+    static_assert(alignof(Mesh) == alignof(void*), "");
 }
 
 #include "Mesh.inl"

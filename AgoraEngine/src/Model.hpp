@@ -1,31 +1,34 @@
 #pragma once
 
+#include <memory>
+#include <MemAlloc/Allocates.hpp>
+#include <ZIPArchive.hpp>
+
 #include "Mesh.hpp"
 
 namespace agora
 {
-    template<class Vertex, class Allocator>
-    class Model
+    template<class Allocator>
+    class Model : public Allocates<Allocator>
     {
     public:
-        Model(Allocator* allocator);
+        Model(Allocator& allocator);
 
-        void prepare(std::size_t numMesh);
+        bool prepare(const ZIPArchive::File& numMesh);
         
     private:
         struct MeshBucket
         {
-            Mesh<Vertex, Allocator> m_mesh;
+            Mesh m_mesh;
             unsigned m_nChildren; // number of children
             unsigned m_nLoc; // where in meshRelations can we find this
 
             MeshBucket() :
                 m_mesh(m_allocator) {}
         };
+        static_assert(alignof(MeshBucket) == alignof(unsigned), "This is to keep buffers in itself.");
 
     private:
-        Allocator* const m_allocator;
-
         // Basic Layout:
         // m_meshList just stores all the meshes (yawn)
         // Each MeshBuckets points into the m_meshRelations 
@@ -38,13 +41,37 @@ namespace agora
 
 // inline definitions
 
-template<class Vertex, class Allocator>
-agora::Model<Vertex, Allocator>::Model(Allocator* const allocator) :
-    m_allocator(allocator),
+template<class Allocator>
+agora::Model<Allocator>::Model(Allocator& allocator) :
+    Allocates<Allocator>(allocator),
     m_meshList(nullptr),
     m_meshRelations(nullptr),
     m_numMeshes(0)
 {
+}
+
+template<class Allocator>
+inline bool agora::Model<Allocator>::prepare(const ZIPArchive::File& numMesh)
+{
+    aByte tempBuffer[8];
+
+    numMesh.readBytes(tempBuffer, 4);
+    numMesh.
+
+
+    // get alignment information first:
+    std::size_t relationsListSize = sizeof(unsigned) * (numMesh - 1);
+
+    // get alignment information all worked out:
+    void* location = reinterpret_cast<void*>(numMesh * sizeof(MeshBucket));
+    void* result = std::align(alignof(unsigned), relationsListSize, location, std::numeric_limits<std::size_t>::max()); // essentially all of it
+    std::size_t size = reinterpret_cast<std::uintptr_t>(result) + relationsListSize;
+    std::uintptr_t mem = reinterpret_cast<std::uintptr_t>(m_Allocator.allocate(size, alignof(MeshBucket), 0));
+
+    m_meshList = reinterpret_cast<MeshBucket*>(mem);
+    m_meshRelations = reinterpret_cast<unsigned*>(mem + reinterpret_cast<std::uintptr_t>(result));
+    m_numMeshes = numMesh;
+    return mem != 0;
 }
 
 template<class Vertex, class Allocator>
