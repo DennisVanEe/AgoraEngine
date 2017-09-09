@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Include\Types.hpp" />

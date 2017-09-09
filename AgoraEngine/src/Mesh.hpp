@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <MemAlloc/Allocates.hpp>
 #include <glad/glad.h>
-#include <Types.hpp>
 
 #include "Include/Types.hpp"
 
@@ -41,25 +40,25 @@ namespace agora
         // When loading a mesh (or modifying the mesh's RAM buffer) use this dangerous function 
         // (I leave it to the user to keep track of everything).
         template<typename T>
-        inline T* getVertexData(unsigned startLoc);
+        T* getVertexData(unsigned startLoc);
         template<typename T>
-        inline const T* getVertexData(unsigned startLoc) const;
+        const T* getVertexData(unsigned startLoc) const;
         // Get max amount of space that is accessible for use (0 if non was allocated or there was an error)
-        inline unsigned getVertexBufferSize() const;
+        unsigned getVertexBufferSize() const;
 
         template<typename T>
-        inline T* releaseVertexData(unsigned startLoc);
-        inline void returnVertexData();
-        inline GLuint* releaseIndexData(unsigned startLoc = 0);
-        inline void returnIndexData();
+        T* releaseVertexData(unsigned startLoc);
+        void returnVertexData();
+        GLuint* releaseIndexData(unsigned startLoc = 0);
+        void returnIndexData();
 
-        inline GLuint* getIndexData(unsigned startLoc = 0);
-        inline const GLuint* getIndexData(unsigned startLoc = 0) const;
-        inline unsigned getIndexBufferSize() const;
+        GLuint* getIndexData(unsigned startLoc = 0);
+        const GLuint* getIndexData(unsigned startLoc = 0) const;
+        unsigned getIndexBufferSize() const;
 
-        inline unsigned getNumIndices() const;
+        unsigned getNumIndices() const;
 
-        inline void addAttrib(unsigned index, VertexAttrib attrib);
+        void addAttrib(unsigned index, VertexAttrib attrib);
 
         void sendToGPU(GLenum usage = GL_STATIC_DRAW);
         void releaseFromGPU();
@@ -78,11 +77,10 @@ namespace agora
         void operator=(Mesh&&) = delete;
 
     private:
-        template<typename Allocator>
         friend class Model;
 
         // Memory is purely managed by the model itself
-        inline void prepare(void* baseLocation, unsigned vertexBuffSize, unsigned numAttrib, unsigned stride, unsigned indexBuffSize);
+        unsigned prepare(void* baseLocation, unsigned vertexBuffSize, unsigned numAttrib, unsigned stride, unsigned indexBuffSize);
 
     private:
         VertexAttrib*   m_attributes; // always comes first in the buffer (so, this is what is first pointed at)

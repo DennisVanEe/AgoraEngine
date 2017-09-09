@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Types.hpp"
+
 namespace agora
 {
     inline bool isPow2(unsigned long num);
@@ -58,13 +60,13 @@ std::uint64_t agora::loadUINT64(aByte* buffer)
 void agora::storeUINT32(aByte* buffer, std::uint32_t num)
 {
     aByte* numPtr = reinterpret_cast<aByte*>(&num);
-    for (int i = 0; i < 4; i++) // this should get unrolled
+    for (int i = 0; i < UINT32_SIZE; i++) // this should get unrolled
         buffer[i] = numPtr[i];
 }
 
 void agora::storeUINT64(aByte* buffer, std::uint64_t num)
 {
     aByte* numPtr = reinterpret_cast<aByte*>(&num);
-    for (int i = 0; i < 8; i++) // this should get unrolled
+    for (int i = 0; i < UINT64_SIZE; i++) // this should get unrolled
         buffer[i] = numPtr[i];
 }
