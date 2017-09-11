@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(SolutionDir)..\AgoraDependencies\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(SolutionDir)..\AgoraDependencies\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(SolutionDir)..\AgoraDependencies\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)AgoraEngine\src\Include;$(SolutionDir)..\AgoraDependencies\zziplib\include;$(SolutionDir)..\AgoraDependencies\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -122,11 +122,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\file_group.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\error_codes.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\importer.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\load_request.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\material.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\mesh.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\model_index_table.hpp" />
+    <ClInclude Include="..\..\..\agora_engine\model_importer\model_importer\number_ops.hpp" />
+    <ClInclude Include="src\ModelExporter\ErrorCodes.hpp" />
+    <ClInclude Include="src\ModelExporter\importer.hpp" />
+    <ClInclude Include="src\ModelExporter\LoadRequest.hpp" />
+    <ClInclude Include="src\ModelExporter\material.hpp" />
+    <ClInclude Include="src\ModelExporter\mesh.hpp" />
+    <ClInclude Include="src\ModelExporter\ModelIndexTable.hpp" />
+    <ClInclude Include="src\ModelExporter\NumberOps.hpp" />
     <ClInclude Include="src\ZIPArchive.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\file_group.cpp" />
+    <ClCompile Include="..\..\..\agora_engine\model_importer\model_importer\importer.cpp" />
+    <ClCompile Include="..\..\..\agora_engine\model_importer\model_importer\main.cpp" />
+    <ClCompile Include="..\..\..\agora_engine\model_importer\model_importer\material.cpp" />
+    <ClCompile Include="..\..\..\agora_engine\model_importer\model_importer\model_index_table.cpp" />
+    <ClCompile Include="..\..\..\agora_engine\model_importer\model_importer\stb_image.cpp" />
+    <ClCompile Include="src\ModelExporter\importer.cpp" />
+    <ClCompile Include="src\ModelExporter\main.cpp" />
+    <ClCompile Include="src\ModelExporter\material.cpp" />
+    <ClCompile Include="src\ModelExporter\ModelIndexTable.cpp" />
     <ClCompile Include="src\ZIPArchive.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
