@@ -1,4 +1,4 @@
-# AgoraEngine
+# AgoraEngine (ABANDONED)
 
 A still-in-progress game engine written in C++.
 Features to be ported from my other projects:
